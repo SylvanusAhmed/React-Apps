@@ -1,4 +1,5 @@
 import Battery from "./Battery"
+import {Routes, Route} from "react-router-dom"
 import { AiOutlineLike } from "react-icons/ai";
 import Profile1 from "../assets/profile-1.png"
 import NetworkType from "./NetworkType"
@@ -8,40 +9,56 @@ import { GoVideo } from "react-icons/go";
 import { IoHome, IoStorefrontSharp, IoNotificationsOutline, IoMenu } from "react-icons/io5";
 import { RiShareForwardLine } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
+import Photo from "./Photo";
+import Video from "./Video";
+import Text from "./Text";
+import PostHead from "./PostHead";
 
-const Android = ({ time, profileName, charge, signalStrength }) => { // Fix spelling
+const Android = ({ postPhoto,time, profileName, charge, signalStrength, profileImage, name, postState, cert, dateTime, renderHashtags, postContent, src, poster}) => { // Fix spelling
   return (
     <div className="bg-white w-[60%] place-self-center mt-2 rounded-md">
       <header className="border-b-8 border-gray-500">
+
         <div className="flex items-center justify-between mx-5 pt-2">
           <p>{time}</p>
-          <div className="flex items-center justify-between gap-2">
-            <Signal signalStrength={signalStrength} />  {/* ✅ Pass the prop here */}
+          <div className="flex items-center justify-between gap-1">
             <NetworkType />
+            <Signal signalStrength={signalStrength} />  {/* ✅ Pass the prop here */}
             <Battery charge={charge} />
           </div>
         </div>
 
         <div className="flex items-center justify-between mx-6">
           <FaChevronLeft />
-          <h1 className="text-lg">{profileName}</h1>
+          <h1 className="text-lg font-bold">{profileName}</h1>
           <IoSearch className="text-2xl" />
         </div>
 
         <ul className="flex items-center justify-evenly my-4 font-bold text-sm">
-          <li>Posts</li>
-          <li>About</li>
-          <li>Photos</li>
-          <li>Videos</li>
-          <li className="flex items-center">
+          <li className="text-blue-700  px-2 py-1 rounded-2xl bg-blue-100 cursor-pointer">Posts</li>
+          <li className="cursor-pointer">About</li>
+          <li className="cursor-pointer">Photos</li>
+          <li className="cursor-pointer">Videos</li>
+          <li className="flex items-center cursor-pointer">
             More
             <FaCaretDown />
           </li>
         </ul>
       </header>
 
-      <main className="h-1/2 w-full">
-        <img src={Profile1} alt="Profile" />
+      <main className="min-h-[14rem] w-full">
+
+        <PostHead profileImage={profileImage} name={name} postState={postState} cert={cert} dateTime={dateTime} postContent={postContent} renderHashtags={renderHashtags} className="mb-5 "/>
+
+
+
+        <Routes>
+          <Route index element={<Photo/>}/>
+          <Route path="photo" element={<Photo postPhoto={postPhoto}/>}/>
+          <Route  path="video" element={<Video src={src} ploster={poster}/>}/>
+          <Route path="/" element={<Android/>}/>
+
+        </Routes>
       </main>
 
       <footer className="bg-white p-2 rounded-b-md">
