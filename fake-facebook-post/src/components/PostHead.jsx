@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import PostData from '../context/PostData'
 
-const PostHead = ({profileImage, name, postState, cert, dateTime, renderHashtags, postContent}) => {
+const PostHead = ({}) => {
+
+    const {profileImage, name, postState, cert, dateTime, renderHashtags, postContent} = useContext(PostData)
   return (
     <div>
         <div className="flex items-center justify-between mx-2">

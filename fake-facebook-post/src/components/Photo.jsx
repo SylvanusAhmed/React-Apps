@@ -1,6 +1,9 @@
-import React from 'react'
+import {useContext} from 'react'
+import PostData from '../context/PostData'
 
-const Photo = ({postPhoto}) => {
+const Photo = () => {
+  const {postPhoto} = useContext(PostData)
+  
   return (
     <div>
         <img src={postPhoto} alt="" className='w-full h-1/2 my-3' />

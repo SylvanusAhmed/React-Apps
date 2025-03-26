@@ -1,5 +1,9 @@
+import {useContext} from 'react'
+import  PostData from '../context/PostData'
 
-const Signal = ({signalStrength}) => {
+const Signal = () => {
+
+  const {signalStrength} = useContext(PostData)
   return (
     <div className="flex items-end gap-[0.08rem]">
       {Array.from({ length: 4 }).map((_, index) => (

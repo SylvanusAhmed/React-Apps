@@ -1,6 +1,9 @@
-import React from 'react'
+import PostData from '../context/PostData'
+import {useContext} from "react"
 
-const Battery = ({charge}) => {
+
+const Battery = () => {
+  const {charge} = useContext(PostData)
   return (
     <div className="relative w-6 h-3 border-2 flex items-center justify-start rounded-sm">
         {/* Battery Level */}

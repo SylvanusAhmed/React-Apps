@@ -1,9 +1,12 @@
-import React from 'react'
+import {useContext} from 'react'
+import PostData from '../context/PostData'
 
-const Video = ({src, poster}) => {
+const Video = () => {
+
+  const {src, poster} = useContext(PostData)
   return (
     <div>
-      <video src={src} poster={poster} controls className='w-full'></video>
+      <video src={src}  controls className='w-full'></video>
         
 
       

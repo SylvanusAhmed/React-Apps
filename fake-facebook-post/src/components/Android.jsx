@@ -1,30 +1,37 @@
 import Battery from "./Battery"
 import {Routes, Route} from "react-router-dom"
 import { AiOutlineLike } from "react-icons/ai";
-import Profile1 from "../assets/profile-1.png"
-import NetworkType from "./NetworkType"
 import Signal from "./Signal"
 import { FaChevronLeft, FaCaretDown, FaRegComment, FaWhatsapp, FaUserFriends } from "react-icons/fa";
 import { GoVideo } from "react-icons/go";
 import { IoHome, IoStorefrontSharp, IoNotificationsOutline, IoMenu } from "react-icons/io5";
+import { Md4gMobiledata } from "react-icons/md";
+import { RiArrowUpDownLine } from "react-icons/ri";
 import { RiShareForwardLine } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import Photo from "./Photo";
 import Video from "./Video";
-import Text from "./Text";
 import PostHead from "./PostHead";
+import PostData from "../context/PostData";
+import {useContext} from 'react'
 
-const Android = ({ postPhoto,time, profileName, charge, signalStrength, profileImage, name, postState, cert, dateTime, renderHashtags, postContent, src, poster}) => { // Fix spelling
+
+const Android = () => { // Fix spelling
+
+const { postPhoto,time,  profileName,likes, likeType, comments, shares, footerImage} = useContext(PostData)
   return (
-    <div className="bg-white w-[60%] place-self-center mt-2 rounded-md">
+    <div className="bg-white md:w-[60%] max-md:w-full place-self-center mt-2 rounded-md">
       <header className="border-b-8 border-gray-500">
 
         <div className="flex items-center justify-between mx-5 pt-2">
           <p>{time}</p>
           <div className="flex items-center justify-between gap-1">
-            <NetworkType />
-            <Signal signalStrength={signalStrength} />  {/* ✅ Pass the prop here */}
-            <Battery charge={charge} />
+           <div className='flex flex-col items-center'>
+              <Md4gMobiledata />
+              <RiArrowUpDownLine className='size-2' />
+            </div>
+            <Signal/>  {/* ✅ Pass the prop here */}
+            <Battery />
           </div>
         </div>
 
@@ -48,25 +55,29 @@ const Android = ({ postPhoto,time, profileName, charge, signalStrength, profileI
 
       <main className="min-h-[14rem] w-full">
 
-        <PostHead profileImage={profileImage} name={name} postState={postState} cert={cert} dateTime={dateTime} postContent={postContent} renderHashtags={renderHashtags} className="mb-5 "/>
+        <PostHead className="mb-5 "/>
 
 
 
         <Routes>
-          <Route index element={<Photo/>}/>
-          <Route path="photo" element={<Photo postPhoto={postPhoto}/>}/>
-          <Route  path="video" element={<Video src={src} ploster={poster}/>}/>
-          <Route path="/" element={<Android/>}/>
+          <Route path="photo" element={<Photo/>}/>
+          <Route  path="video" element={<Video/>}/>
 
         </Routes>
       </main>
 
-      <footer className="bg-white p-2 rounded-b-md">
-        <div className="flex items-center justify-between">
-          <p>100 likes</p>
-          <div className="flex items-center justify-between gap-1">
-            <p>200 comments</p>
-            <p>100 shares</p>
+      <footer className="bg-white p-2 rounded-b-md break-words">
+        <div className="flex items-center justify-between break-words">
+          <div className="flex justify-center items-center gap-2 break-words">
+            {
+            likeType &&   <img src={likeType} alt="" className="w-9 h-5"/>
+            }
+            <p>{likes}</p>
+            
+          </div>
+          <div className="flex items-center justify-between gap-2 break-words">
+            <p>{comments} comments</p>
+            <p>{shares} shares</p>
           </div>
         </div>
 
@@ -89,30 +100,33 @@ const Android = ({ postPhoto,time, profileName, charge, signalStrength, profileI
           </li>
         </ul>
 
-        <ul className="flex items-center justify-evenly gap-2 text-xs font-bold my-5 border-t-2 pt-3 w-full">
-          <li className="flex flex-col justify-center items-center text-blue-700">
-            <div className="bg-blue-700 h-[0.2rem] w-full transform -translate-y-[0.9rem] rounded-sm"></div>
+        <ul className="flex items-end justify-evenly gap-2 text-xs font-bold my-5 border-t-2 pt-3 w-full">
+          <li className="flex flex-col justify-center items-center text-blue-700 cursor-pointer">
+            <div className="bg-blue-700 h-[0.2rem] w-full transform -translate-y-[1.3rem] rounded-sm"></div>
             <IoHome className="text-lg" />
             <p>Home</p>
           </li>
-          <li className="flex flex-col justify-center items-center">
+          <li className="flex flex-col justify-center items-center cursor-pointer">
             <GoVideo className="text-lg" />
             <p>Video</p>
           </li>
-          <li className="flex flex-col justify-center items-center">
+          <li className="flex flex-col justify-center items-center cursor-pointer">
             <FaUserFriends className="text-lg" />
             <p>Friends</p>
           </li>
-          <li className="flex flex-col justify-center items-center">
+          <li className="flex flex-col justify-center items-center cursor-pointer">
             <IoStorefrontSharp className="text-lg" />
             <p>Marketplace</p>
           </li>
-          <li className="flex flex-col justify-center items-center">
+          <li className="flex flex-col justify-center items-center cursor-pointer">
             <IoNotificationsOutline className="text-lg" />
             <p>Notification</p>
           </li>
-          <li className="flex flex-col justify-center items-center">
-            <IoMenu className="text-lg" />
+          <li className="flex flex-col justify-center items-center relative cursor-pointer">
+            <div>
+              <img src={footerImage} alt=""  className="w-7 h-7 border-2 rounded-full"/>
+               <IoMenu className="text-lg absolute top-4 right-0" />
+            </div>
             <p>Menu</p>
           </li>
         </ul>

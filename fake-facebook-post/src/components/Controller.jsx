@@ -1,8 +1,15 @@
 import { useNavigate} from 'react-router-dom';
-import { useState, useRef} from 'react'
+import { useState, useRef, useContext} from 'react'
+import Like1 from '../assets/like1.png'
+import Like2 from '../assets/like2.png'
+import Like3 from '../assets/like3.png'
+import Like4 from '../assets/like4.png'
+import Like5 from '../assets/like5.png'
+import Like6 from '../assets/like6.png'
+import PostData from '../context/PostData';
 
-const Controller = (
-  { 
+const Controller = () => {
+  const {
     time, 
     setTime,
     handleCharge,
@@ -21,9 +28,16 @@ const Controller = (
     setDateTime,
     handlePostContent,
     handlePostPhoto,
-    handleVideoInput
-  }
-) => {
+    handleVideoInput,
+    likes,
+    setLikes,
+    comments,
+    setComments,
+    shares,
+    setShares,
+    setLikeType,
+    handleFooterImage
+  } = useContext(PostData)
 
   const [postType, setPostType] = useState("")
   const navigate = useNavigate();
@@ -56,16 +70,17 @@ const Controller = (
                         {/* BATTERY PERCENTAGE AND CLOCK */}
 
 
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center  justify-center gap-2 max-md:flex-col md:flex-row'>
                   <div className='flex flex-col items-center '>
                       <label htmlFor="" className="font-bold">Clock</label>
                       <input 
                         type="time" 
                         value={time}
                         onChange={(e) => setTime(e.target.value)}
-                        className='border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-blue-500'
+                        className='border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-blue-500 max-md-w-full'
                       />
                   </div>
+                  {/* Battery Charge */}
                   <div className='flex flex-col items-center'>
                       <label htmlFor="" className="font-bold">Battery Percent</label>
                       <input 
@@ -120,8 +135,8 @@ const Controller = (
 
                                 {/* NAME */}
 
-                          <div className='flex items-center gap-1'>
-                                <div className='flex flex-col items center mt-3 gap-2'>
+                          <div className='flex items-center justify-center max-md:flex-col md:flex-row gap-1'>
+                                <div className='flex flex-col items-center mt-3 gap-2'>
                                   <label htmlFor="" className='font-bold'>Name</label>
                                   <input 
                                     type="text"
@@ -199,23 +214,81 @@ const Controller = (
 
                                 {/* INPUT FIELD FOR PHOTO */}
 
-                            {postType === "photo" &&  <div className='transition-all duration-150'>
+                            {postType === "photo" &&  <div className='transition-all duration-150 p-2'>
                                 <label htmlFor="" className='font-bold mt-2'>Add Photo</label>
                                 <input type="file"  onChange={handlePostPhoto}/>
                             </div>}
 
                             {postType === "video" &&
-                              <div className='transition-all duration-150'>
+                              <div className='transition-all duration-150 p-2'>
                                   <label htmlFor="" className='font-bold mt-2'>Add Video</label>
                                   <input type="file"  onChange={handleVideoInput}/>
                               </div>
 
                             }
+
+
+                            {/* NUMBER OF LIKES AND LIKE TYPE */}
+                            <div className='flex justify-center items-center gap-5 md:flex-row max-md:flex-col'>
+                                <div className='flex justify-center items-center gap-3 max-md:flex-row md:flex-col'>
+                                  <label htmlFor="">Select like icon</label>
+                                  <select name="" id="" onChange={(e) => setLikeType(e.target.value)} className='border-2 border-black'>
+                                    <option value="">No icon</option>
+                                    <option value={Like1}>Like 1</option>
+                                    <option value={Like2}>Like 2</option>
+                                    <option value={Like3}>Like 3</option>
+                                    <option value={Like4}>Like 4</option>
+                                    <option value={Like5}>Like 5</option>
+                                    <option value={Like6}>Like 6</option>
+                                  </select>
+
+                                </div>
+
+                                <div className='p-2 gap-2 flex justify-center items-center max-md:flex-row md:flex-col'>
+                                  <label htmlFor="" className='mb-2'>Number Of likes</label>
+                                  <input type="text" 
+                                    value={likes}
+                                    onChange ={(e) => setLikes(e.target.value)}
+                                    className='border-2 border-black rounded-md'
+                                  />
+                                </div>
+
+                                
+                            </div>
                             
                             
-                           
+                            <div className='flex justify-center items-center gap-2 p-3 md:flex-row max-md:flex-col'>
+                                    <div className='flex items-center justify-center md:flex-col max-md:flex-row gap-2'>
+                                          <label htmlFor="">Comments</label>
+                                          <input type="number"
+                                            value={comments}
+                                            onChange={(e) => setComments(e.target.value)}
+                                            className='border-2 border-black rounded-md max-w-56 w-full'
+                                          
+                                          />
+                                    </div>
+                                    <div className='flex items-center justify-center md:flex-col max-md:flex-row gap-2'>
+                                          <label htmlFor="">Shares</label>
+                                          <input type="number"
+                                            value={shares}
+                                            onChange={(e) => setShares(e.target.value)}
+                                            className='border-2 border-black rounded-md max-w-56 w-full'
+                                          
+                                          />
+                                    </div>
+                             </div>
+
+                             <div>
+                              <label htmlFor="">Footer Image</label>
+                              <input 
+                                type="file"
+                                onChange={handleFooterImage} 
+                              
+                              />
+                             </div>
 
                           </div>
+                          
               </form>
           </div>
         
