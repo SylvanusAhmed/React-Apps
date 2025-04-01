@@ -8,7 +8,7 @@ const FBpage = () => {
     <div className='min-h-screen bg-gray-300 w-[120%]  p-5 px-10 rounded-lg'>
         <div>
           <Routes>
-            <Route path='*' element={<Android 
+            <Route path='/' element={<Android 
                     
                       />}/>
             <Route path='/Iphone' element={<Iphone/>}/>

@@ -8,8 +8,6 @@ import { IoHome, IoStorefrontSharp, IoNotificationsOutline, IoMenu } from "react
 import { RiShareForwardLine } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import { Md4gMobiledata } from "react-icons/md";
-import Photo from "./Photo";
-import Video from "./Video";
 import PostHead from "./PostHead";
 import PostData from "../context/PostData";
 import {useContext} from 'react'
@@ -17,7 +15,7 @@ import {useContext} from 'react'
 
 const Iphone = () => { // Fix spelling
 
-const { postPhoto,time,  profileName,likes, likeType, comments, shares, footerImage} = useContext(PostData)
+const { postPhoto,time,  profileName,likes, likeType, comments, shares, footerImage, postType, src} = useContext(PostData)
   return (
     <div className="bg-white md:w-[60%] max-md:w-full place-self-center mt-2 rounded-md">
       <header className="border-b-8 border-gray-500">
@@ -57,16 +55,23 @@ const { postPhoto,time,  profileName,likes, likeType, comments, shares, footerIm
         <PostHead className="mb-5 "/>
 
 
+      {/* The type of thing you are posting, video photo or text */}
+        {postType === "photo" && 
+         <div>
+           <img src={postPhoto} alt="" className='w-full h-1/2 my-3' />
+        </div>}
 
-        <Routes>
-          <Route path="photo" element={<Photo/>}/>
-          <Route  path="video" element={<Video/>}/>
+        {postType === "video" &&  
+        <div>
+          <video src={src}  controls className='w-full'></video>
+        </div>}
 
-        </Routes>
+
       </main>
 
       <footer className="bg-white p-2 rounded-b-md break-words">
         <div className="flex items-center justify-between break-words">
+
           <div className="flex justify-center items-center gap-2 break-words">
             {
             likeType &&   <img src={likeType} alt="" className="w-9 h-5"/>
@@ -74,6 +79,7 @@ const { postPhoto,time,  profileName,likes, likeType, comments, shares, footerIm
             <p>{likes}</p>
             
           </div>
+          
           <div className="flex items-center justify-between gap-2 break-words">
             <p>{comments} comments</p>
             <p>{shares} shares</p>

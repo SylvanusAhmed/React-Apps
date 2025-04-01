@@ -3,6 +3,8 @@ import ProfileImage from "../assets/profile.jpg"
 import certified from "../assets/certif.png"
 import PostPhoto from "../assets/profile-1.png"
 import FooterImage from "../assets/profile.jpg"
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 
 
@@ -28,7 +30,9 @@ export const PostDataProvider = ({children}) => {
     const [likeType, setLikeType] = useState("");
     const [shares, setShares] = useState(50)
     const [comments, setComments] = useState(50);
-    const [footerImage, setFooterImage] = useState(FooterImage)
+    const [footerImage, setFooterImage] = useState(FooterImage);
+    const [postType, setPostType] = useState("text"); // Default to "text"
+
   
     // Function to handle user input for the video source
     const handleVideoInput = (event) => {
@@ -39,6 +43,8 @@ export const PostDataProvider = ({children}) => {
         setPoster(''); // Remove the poster when video is loaded
       }
     };
+
+    
 
     const handleFooterImage = (e) => {
       const file = e.target.files[0]
@@ -139,6 +145,23 @@ export const PostDataProvider = ({children}) => {
       if (value < 0) value = 0;
       setCharge(value);
     };
+
+
+    const downloadPost = () => {
+      const post = document.getElementById("fakePost"); // Ensure this ID is in your post container
+    
+      html2canvas(post).then((canvas) => {
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "fake_facebook_post.png";
+        link.click();
+      });
+    };
+    
+    
+
+
+
    return(
     <PostData.Provider value={{
         profileImage, name, postState, cert, dateTime, renderHashtags, postContent,
@@ -147,7 +170,7 @@ export const PostDataProvider = ({children}) => {
         dateTime, setDateTime, handlePostContent, handlePostPhoto, handleVideoInput, likes, setLikes,
         comments,setComments,shares,setShares,setLikeType,charge,signalStrength,
         postPhoto,time,  profileName,likes, likeType, comments, shares,
-        src, poster, footerImage, handleFooterImage
+        src, poster, footerImage, handleFooterImage, setPostType, postType, downloadPost 
     }}>
         {children}
     </PostData.Provider>

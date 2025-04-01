@@ -1,5 +1,5 @@
 import { useNavigate} from 'react-router-dom';
-import { useState, useRef, useContext} from 'react'
+import {useContext} from 'react'
 import Like1 from '../assets/like1.png'
 import Like2 from '../assets/like2.png'
 import Like3 from '../assets/like3.png'
@@ -36,14 +36,14 @@ const Controller = () => {
     shares,
     setShares,
     setLikeType,
-    handleFooterImage
+    handleFooterImage,
+    setPostType,
+    postType
   } = useContext(PostData)
 
-  const [postType, setPostType] = useState("")
   const navigate = useNavigate();
 
   const handleRoute = (route) => {
-    setPostType(route)
     navigate(route)
   }
 
@@ -194,20 +194,20 @@ const Controller = () => {
                             <h2 className='font-bold'>Posts</h2>
                             <div>
                               <div className='flex items-center gap-2'>
-                                <input type="radio" id="photo"  name="postType" onChange={() => handleRoute("photo")} />
+                                <input type="radio" id="photo"  name="postType" onChange={() => setPostType("photo")} />
                                 <label htmlFor="">Photo</label>
 
                               </div>
                                   {/* VIDEO */}
 
                               <div className='flex items-center gap-2'>
-                                <input type="radio" id="video" name="postType" onChange={() => handleRoute("video")} />
+                                <input type="radio" id="video" name="postType" onChange={() => setPostType("video")} />
                                 <label htmlFor="">Video</label>
                               </div>
 
                                       {/* TEXT */}
                               <div className='flex items-center gap-2'>
-                                <input type="radio" id="text" name="postType" onChange={() => handleRoute("/")} />
+                                <input type="radio" id="text" name="postType" onChange={() => setPostType("/")} />
                                 <label htmlFor="">Text</label>
                               </div>
                             </div>
@@ -278,7 +278,7 @@ const Controller = () => {
                                     </div>
                              </div>
 
-                             <div>
+                             <div className='p-5'>
                               <label htmlFor="">Footer Image</label>
                               <input 
                                 type="file"
